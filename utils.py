@@ -13,3 +13,13 @@ square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI') for cs in ('123', 
 unit_list = row_units + column_units + square_units
 units = dict((s, [u for u in unit_list if s in u]) for s in boxes)
 peers = dict((s, set(sum(units[s], [])) - {s}) for s in boxes)
+
+
+def display(grid_values):
+    width = 1 + max(len(grid_values[s]) for s in boxes)
+    line = '+'.join(['-' * (width * 3)] * 3)
+    for r in rows:
+        print(''.join(grid_values[r + c].center(width) + ('|' if (c == '3' or c == '6') else '') for c in cols))
+        if r == 'C' or r == 'F':
+            print(line)
+    return
