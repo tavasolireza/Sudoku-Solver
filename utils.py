@@ -53,3 +53,15 @@ def only_choice(sudoku_values):
             if len(only_choice_box) == 1:
                 sudoku_values[only_choice_box[0]] = digit
     return sudoku_values
+
+
+def reduce_puzzle(sudoku_values):
+    stalled = False
+    while not stalled:
+        solved_values_before = len([box for box in sudoku_values.keys() if len(sudoku_values[box]) == 1])
+        sudoku_values = only_choice(eliminate(sudoku_values))
+        solved_values_after = len([box for box in sudoku_values.keys() if len(sudoku_values[box]) == 1])
+        stalled = solved_values_before == solved_values_after
+        if len([box for box in sudoku_values.keys() if len(sudoku_values[box]) == 0]):
+            return False
+    return sudoku_values
