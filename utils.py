@@ -35,3 +35,21 @@ def grid_values(grid):
             chars.append(digits)
     if len(chars) == 81:
         return dict(zip(boxes, chars))
+
+
+def eliminate(sudoku_values):
+    solved_values = [box for box in sudoku_values.keys() if len(sudoku_values[box]) == 1]
+    for box in solved_values:
+        digit = sudoku_values[box]
+        for peer in peers[box]:
+            sudoku_values[peer] = sudoku_values[peer].replace(digit, '')
+    return sudoku_values
+
+
+def only_choice(sudoku_values):
+    for unit in unit_list:
+        for digit in '123456789':
+            only_choice_box = [box for box in unit if digit in sudoku_values[box]]
+            if len(only_choice_box) == 1:
+                sudoku_values[only_choice_box[0]] = digit
+    return sudoku_values
