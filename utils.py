@@ -23,3 +23,15 @@ def display(sudoku_values):
         if r == 'C' or r == 'F':
             print(line)
     return
+
+
+def grid_values(grid):
+    chars = []
+    digits = '123456789'
+    for box in grid:
+        if box in digits:
+            chars.append(box)
+        if box == '.':
+            chars.append(digits)
+    if len(chars) == 81:
+        return dict(zip(boxes, chars))
