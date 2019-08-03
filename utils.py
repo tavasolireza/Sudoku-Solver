@@ -65,3 +65,18 @@ def reduce_puzzle(sudoku_values):
         if len([box for box in sudoku_values.keys() if len(sudoku_values[box]) == 0]):
             return False
     return sudoku_values
+
+
+def search(sudoku_values):
+    sudoku_values = reduce_puzzle(sudoku_values)
+    if sudoku_values is False:
+        return False
+    if all(len(sudoku_values[s]) == 1 for s in boxes):
+        return sudoku_values
+    n, s = min((len(sudoku_values[s]), s) for s in boxes if len(sudoku_values[s]) > 1)
+    for value in sudoku_values[s]:
+        new_sudoku = sudoku_values.copy()
+        new_sudoku[s] = value
+        solved_sudokus = search(new_sudoku)
+        if solved_sudokus:
+            return solved_sudokus
